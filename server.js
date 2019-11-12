@@ -24,7 +24,8 @@ app.get('/api/todos', async (req, res) => {
 
     try {
         const result = await client.query(`
-            
+            SELECT *
+            FROM todos
         `);
 
         res.json(result.rows);
