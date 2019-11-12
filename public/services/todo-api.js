@@ -18,7 +18,12 @@ export function getTodos() {
 }
 
 export function addTodo(todo) {  
-    
+    const url = `${URL}/todos/${id}`;
+
+    const response = await fetch(url, {
+        method: 'POST',
+        body: 
+    })
 }
 
 export function updateTodo(todo) {  

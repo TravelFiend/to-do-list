@@ -4,6 +4,7 @@ import Loading from '../common/Loading.js';
 import AddTodo from './AddTodo.js';
 import TodoList from './TodoList.js';
 import { getTodos, addTodo, updateTodo, removeTodo } from '../services/todo-api.js';
+import { listenerCount } from 'cluster';
 
 class TodoApp extends Component {
 
@@ -14,18 +15,22 @@ class TodoApp extends Component {
         const main = dom.querySelector('main');
         const error = dom.querySelector('.error');
 
+        const list = new TodoList({ todos: [] });
+        main.appendChild(list.renderDOM());
+
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
 
         // initial todo load:
         try {
-            
+            const todos = await getTodos();
+            list.update(todos);
         }
         catch (err) {
-            // display error...
+            console.log(`Failed to grab todos\n`, err);
         }
         finally {
-            loading.update({ loading: false });
+            setTimeout(() => loading.update({ loading: false }), 750);
         }
 
     }

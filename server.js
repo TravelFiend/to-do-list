@@ -36,7 +36,6 @@ app.get('/api/todos', async (req, res) => {
             error: err.message || err
         });
     }
-
 });
 
 app.post('/api/todos', async (req, res) => {
@@ -44,7 +43,8 @@ app.post('/api/todos', async (req, res) => {
 
     try {
         const result = await client.query(`
-            
+            INSERT INTO todos
+            VALUES ($1)
         `,
         [/* pass in data */]);
 
