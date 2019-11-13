@@ -1,0 +1,29 @@
+li {
+    height: 44px;
+}
+
+.num, .task, #check {
+    margin: 10px;
+}
+
+span {
+    background-color: #e74c3c;
+    text-align: center;
+    color: #363636;
+    width: 0px;
+    height: 100%;
+    display: inline-block;
+    transition: 0.3s linear;
+    opacity: 0;
+    margin-right: 15px;
+}
+
+li:hover span {
+    width: 44px;
+    opacity: 1.0;
+}
+
+p.task {
+    height: 44px;
+    margin: 0px;
+}

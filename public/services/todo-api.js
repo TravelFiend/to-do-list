@@ -17,13 +17,19 @@ export function getTodos() {
     return fetchWithError(url);
 }
 
-export function addTodo(todo) {  
-    const url = `${URL}/todos/${id}`;
+export async function addTodo(todo) {  
+    const url = `${URL}/todos`;
 
     const response = await fetch(url, {
         method: 'POST',
-        body: 
-    })
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(todo)
+    });
+
+    const data = await response.json();
+    return data;
 }
 
 export function updateTodo(todo) {  

@@ -4,7 +4,6 @@ import Loading from '../common/Loading.js';
 import AddTodo from './AddTodo.js';
 import TodoList from './TodoList.js';
 import { getTodos, addTodo, updateTodo, removeTodo } from '../services/todo-api.js';
-import { listenerCount } from 'cluster';
 
 class TodoApp extends Component {
 
@@ -15,8 +14,30 @@ class TodoApp extends Component {
         const main = dom.querySelector('main');
         const error = dom.querySelector('.error');
 
+        const newTodo = new AddTodo({
+            onAdd: async todo => {
+                error.textContent = '';
+
+                try {
+                    const todoToAdd = await addTodo(todo);
+                    // console.log(todoToAdd);
+                    
+                    // console.log(this.state.todos);
+                    
+                    this.state.todos.push(todoToAdd);
+                    list.update({ todos: this.state.todos });
+                }
+                catch (err){
+                    error.textContent = err;
+                    throw err;
+                }
+            }
+        });
+        main.prepend(newTodo.renderDOM());
+
         const list = new TodoList({ todos: [] });
         main.appendChild(list.renderDOM());
+
 
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
@@ -24,7 +45,8 @@ class TodoApp extends Component {
         // initial todo load:
         try {
             const todos = await getTodos();
-            list.update(todos);
+            this.state.todos = todos;
+            list.update({ todos });
         }
         catch (err) {
             console.log(`Failed to grab todos\n`, err);
@@ -41,10 +63,8 @@ class TodoApp extends Component {
                 <!-- header goes here -->
                 <!-- show errors: -->
                 <p class="error"></p>
-                <main>
-                    <!-- add todo goes here -->
-                    <!-- todo list goes here -->
-                </main>
+                <h1>THE LIST</h1>
+                <main></main>
             </div>
         `;
     }

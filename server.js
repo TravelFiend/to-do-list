@@ -43,10 +43,11 @@ app.post('/api/todos', async (req, res) => {
 
     try {
         const result = await client.query(`
-            INSERT INTO todos
-            VALUES ($1)
+            INSERT INTO todos (task, complete)
+            VALUES ($1, $2)
+            RETURNING *
         `,
-        [/* pass in data */]);
+        [todo.task, todo.complete]);
 
         res.json(result.rows[0]);
     }
