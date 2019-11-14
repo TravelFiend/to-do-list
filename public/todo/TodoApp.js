@@ -20,10 +20,6 @@ class TodoApp extends Component {
 
                 try {
                     const todoToAdd = await addTodo(todo);
-                    // console.log(todoToAdd);
-                    
-                    // console.log(this.state.todos);
-                    
                     this.state.todos.push(todoToAdd);
                     list.update({ todos: this.state.todos });
                 }
@@ -35,7 +31,37 @@ class TodoApp extends Component {
         });
         main.prepend(newTodo.renderDOM());
 
-        const list = new TodoList({ todos: [] });
+        const list = new TodoList({ 
+            todos: [],
+            onUpdate: async todo => {
+                error.textContent = '';
+
+                try {
+                    const todoToUpdate = await updateTodo(todo);
+                    const todoState = this.state.todos;
+                    const ind = todoState.indexOf(todo);
+                    todoState.splice(ind, 1, todoToUpdate);
+                    list.update({ todoState });
+                }
+                catch (err){
+                    error.textContent = err;
+                    throw err;
+                }
+            },
+            onRemove: async todo => {
+                error.textContent = '';
+                try {
+                    await removeTodo(todo.id);
+                    const todoState = this.state.todos;
+                    const ind = todoState.indexOf(todo);
+                    todoState.splice(ind, 1);
+                    list.update({ todoState });
+                } catch (err) {
+                    error.textContent = err;
+                    throw err;
+                }
+            }
+        });
         main.appendChild(list.renderDOM());
 
 
@@ -54,7 +80,6 @@ class TodoApp extends Component {
         finally {
             setTimeout(() => loading.update({ loading: false }), 750);
         }
-
     }
 
     renderHTML() {

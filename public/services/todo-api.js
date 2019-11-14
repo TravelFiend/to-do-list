@@ -17,26 +17,37 @@ export function getTodos() {
     return fetchWithError(url);
 }
 
-export async function addTodo(todo) {  
+export function addTodo(todo) {  
     const url = `${URL}/todos`;
 
-    const response = await fetch(url, {
+    return fetchWithError(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(todo)
     });
-
-    const data = await response.json();
-    return data;
 }
 
 export function updateTodo(todo) {  
-    
+    const url = `${URL}/todos/${todo.id}`;
+
+    return fetchWithError(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(todo)
+    });
 }
 
-export function removeTodo(todoId) {  
-    
-}
+export function removeTodo(id) {  
+    const url = `${URL}/todos/${id}`;
 
+    return fetchWithError(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+}

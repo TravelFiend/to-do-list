@@ -1,4 +1,5 @@
 import Component from '../Component.js';
+import { updateTodo } from '../services/todo-api.js';
 
 class TodoItem extends Component {
     
@@ -6,10 +7,23 @@ class TodoItem extends Component {
         const todo = this.props.todo;
         console.log(todo);
         
-        // const onUpdate = this.props.onUpdate;
-        // const onRemove = this.props.onRemove;
+        const onUpdate = this.props.onUpdate;
+        const onRemove = this.props.onRemove;
 
-        
+        const p = dom.querySelector('p');
+        p.addEventListener('click', event => {
+            event.preventDefault();
+            
+            todo.complete = !todo.complete;
+            onUpdate(todo);
+        });
+
+        const trash = dom.querySelector('#getRid');
+        trash.addEventListener('click', event => {
+            event.preventDefault();
+            
+            onRemove(todo);
+        });
     }
 
     renderHTML() {
@@ -17,7 +31,10 @@ class TodoItem extends Component {
         
         return /*html*/`
             <li>
-                <p class="task"><span><i class="fas fa-trash-alt"></i></span>${todo.task}</p>
+                <span id="getRid">
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+                <p class="${todo.complete ? 'completed' : ''}">${todo.task}</p>
             </li>
         `;
     }
