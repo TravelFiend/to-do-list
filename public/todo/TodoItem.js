@@ -1,5 +1,4 @@
 import Component from '../Component.js';
-import { updateTodo } from '../services/todo-api.js';
 
 class TodoItem extends Component {
     
