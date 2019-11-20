@@ -8,10 +8,10 @@ class UserSignUp extends Component {
             event.preventDefault();
 
             const formData = new FormData(dom);
-            console.log(formData);
+            console.log(formData.get('name'));
 
             const user = {
-                displayName: formData.get('name'),
+                shownName: formData.get('name'),
                 email: formData.get('email'),
                 password: formData.get('password')
             };
@@ -21,23 +21,20 @@ class UserSignUp extends Component {
 
     renderHTML() {
         return /*html*/`
-        <form id="sign-in-form">
+            <form id="sign-in-form">
                 <div>
                     <label for="name"><label>
                     <input class="user-input" id="name" name="name" placeholder="Your Name" />
                 </div>
-
                 <div>
                     <label for="email"><label>
                     <input class="user-input" id="email" name="email" type="email" placeholder="Email"/>
                 </div>
-
                 <div>
                     <label for="password"><label>
                     <input class="user-input" id="password" name="password" type="password" placeholder="Password"/>
                 </div>
-
-                <button class="auth-button">Create Account</button>
+                <button type="submit" class="auth-button">Create Account</button>
             </form>
         `;
     }

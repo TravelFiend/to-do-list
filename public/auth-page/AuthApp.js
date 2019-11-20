@@ -8,7 +8,7 @@ const success = user => {
     localStorage.setItem('TOKEN', user.token);
     localStorage.setItem('USER', user.shownName);
     const searchParams = new URLSearchParams(location.search);
-    location = searchParams.get('redirect') || './game-board.html';
+    location = searchParams.get('redirect') || './todo.html';
 };
 
 class AuthApp extends Component {

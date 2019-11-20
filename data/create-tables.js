@@ -12,10 +12,10 @@ async function run() {
         // run a query to create tables
         await client.query(`
             CREATE TABLE users (
-                id SERIAL PRIMARY KEY NOT NULL
-                email VARCHAR(256) NOT NULL
-                hash VARCHAR(256) NOT NULL
-                name_displayed VARCHAR(256) NOT NULL
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(256) NOT NULL,
+                hash VARCHAR(512) NOT NULL,
+                shown_name VARCHAR(256) NOT NULL
             );
 
             CREATE TABLE todos (
