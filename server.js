@@ -9,6 +9,24 @@ const client = require('./lib/client');
 // Initiate database connection
 client.connect();
 
+//Auth
+const ensureAuth = require('./lib/auth/ensure-auth.js');
+const createAuthRoutes = require('./lib/auth/create-auth-routes.js');
+const authRoutes = createAuthRoutes({
+    selectUser(email){
+        return client.query(`
+            SELECT id, email, hash
+            FROM users
+            WHERE email = $1
+        `, [email]).then(result => result.rows[0]);
+    },
+    insertUser(user, hash){
+        return client.query(`
+            INSERT INTO 
+        `);
+    }
+});
+
 // Application Setup
 const app = express();
 const PORT = process.env.PORT;
