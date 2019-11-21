@@ -1,6 +1,11 @@
 const URL = '/api';
 
 async function fetchWithError(url, options) {
+    if (token) {
+        options = options || {};
+        options.headers = options.headers || {};
+        options.headers.Authorization = token;
+    }
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -11,6 +16,10 @@ async function fetchWithError(url, options) {
         throw data.error;
     }
 }
+
+// async function fetchWithError(url, options) {
+//     const response = await fetch(url, options);
+//     const data = await response.json();
 
 const token = localStorage.getItem('TOKEN');
 if (!token && !(location.pathname === '/' || location.pathname === 'index.html')) {
