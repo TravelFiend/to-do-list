@@ -1,0 +1,46 @@
+li {
+    display: flex;
+    height: 44px;
+}
+
+i {
+    font-size: 20px;
+    margin-top: 12px;
+}
+
+span:hover {
+    cursor: pointer;
+}
+
+.num, .task, #check {
+    margin: 10px;
+}
+
+span {
+    background-color: #e74c3c;
+    display: flex;
+    text-align: center;
+    color: #363636;
+    width: 0px;
+    height: 100%;
+    display: inline-block;
+    transition: 0.3s linear;
+    opacity: 0;
+    margin-right: 15px;
+    
+}
+
+li:hover span {
+    width: 44px;
+    opacity: 1.0;
+}
+
+p {
+    height: 24px;
+    margin-top: 10px;
+}
+
+.completed {
+    color: rgb(168, 168, 168);
+    text-decoration: line-through;
+}
